@@ -14,43 +14,43 @@
     <VBox maxHeight="250.0" prefHeight="198.0" prefWidth="200">
         <HBox maxHeight="250.0">
             <VBox prefWidth="150">
-                <RadioButton minWidth="100.0" onAction="#onPirosSelected" text="Piros">
+                <RadioButton fx:id="radioPiros" minWidth="100.0" onAction="#onPirosSelected" text="Piros">
                <VBox.margin>
                   <Insets bottom="5.0" top="5.0" />
                </VBox.margin>
                <toggleGroup>
                   <ToggleGroup fx:id="togglegroup_Szin" />
                </toggleGroup></RadioButton>
-                <RadioButton minWidth="100.0" onAction="#onZoldSelected" text="Zöld" toggleGroup="$togglegroup_Szin">
+                <RadioButton fx:id="radioZold" minWidth="100.0" onAction="#onZoldSelected" text="Zöld" toggleGroup="$togglegroup_Szin">
                <VBox.margin>
                   <Insets bottom="5.0" />
                </VBox.margin></RadioButton>
-                <RadioButton minWidth="100.0" onAction="#onKekSelected" text="Kék" toggleGroup="$togglegroup_Szin">
+                <RadioButton fx:id="radioKek" minWidth="100.0" onAction="#onKekSelected" text="Kék" toggleGroup="$togglegroup_Szin">
                <VBox.margin>
                   <Insets bottom="5.0" />
                </VBox.margin></RadioButton>
             </VBox>
             <VBox prefWidth="150">
-                <RadioButton onAction="#onNegyzetSelected" text="Négyzet">
+                <RadioButton fx:id="radioNegyzet" onAction="#onNegyzetSelected" text="Négyzet">
                <VBox.margin>
                   <Insets bottom="5.0" top="5.0" />
                </VBox.margin>
                <toggleGroup>
                   <ToggleGroup fx:id="togglegroup_Alakzat" />
                </toggleGroup></RadioButton>
-                <RadioButton onAction="#onKorSelected" text="Kör" toggleGroup="$togglegroup_Alakzat">
+                <RadioButton fx:id="radioKor" onAction="#onKorSelected" text="Kör" toggleGroup="$togglegroup_Alakzat">
                <VBox.margin>
                   <Insets bottom="5.0" />
                </VBox.margin></RadioButton>
-                <RadioButton onAction="#onHaromszogSelected" text="Háromszög" toggleGroup="$togglegroup_Alakzat">
+                <RadioButton fx:id="radioHaromszog" onAction="#onHaromszogSelected" text="Háromszög" toggleGroup="$togglegroup_Alakzat">
                <VBox.margin>
                   <Insets bottom="5.0" />
                </VBox.margin></RadioButton>
             </VBox>
         </HBox>
-      <Pane id="pane_Alakzat" fx:id="pane_Alakzat" maxHeight="178.0" maxWidth="200.0" prefHeight="169.0" prefWidth="200.0">
+      <Pane id="pane_Alakzat" fx:id="pane_Alakzat" maxHeight="150.0" maxWidth="200.0" prefHeight="150.0" prefWidth="200.0" style="-fx-border-color: black;">
          <children>
-            <ImageView id="imageview_Alakzat" fx:id="imageview_Alakzat" fitHeight="132.0" fitWidth="153.0" layoutX="34.0" layoutY="19.0" pickOnBounds="true" preserveRatio="true" />
+            <ImageView id="imageview_Alakzat" fx:id="imageview_Alakzat" fitHeight="135.0" fitWidth="167.0" layoutX="31.0" layoutY="9.0" pickOnBounds="true" preserveRatio="true" />
          </children>
          <padding>
             <Insets top="10.0" />
@@ -61,7 +61,7 @@
       <children>
          <HBox alignment="BOTTOM_CENTER" prefHeight="87.0" prefWidth="280.0">
             <children>
-               <Button minWidth="100.0" mnemonicParsing="false" text="Hozzáad">
+               <Button minWidth="100.0" mnemonicParsing="false" onAction="#onHozaadClick" text="Hozzáad">
                   <HBox.margin>
                      <Insets bottom="10.0" right="70.0" />
                   </HBox.margin>
