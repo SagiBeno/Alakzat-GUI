@@ -31,27 +31,30 @@
                </VBox.margin></RadioButton>
             </VBox>
             <VBox prefWidth="150">
-                <RadioButton text="Négyzet">
+                <RadioButton onAction="#onNegyzetSelected" text="Négyzet">
                <VBox.margin>
                   <Insets bottom="5.0" top="5.0" />
                </VBox.margin>
                <toggleGroup>
                   <ToggleGroup fx:id="togglegroup_Alakzat" />
                </toggleGroup></RadioButton>
-                <RadioButton text="Kör" toggleGroup="$togglegroup_Alakzat">
+                <RadioButton onAction="#onKorSelected" text="Kör" toggleGroup="$togglegroup_Alakzat">
                <VBox.margin>
                   <Insets bottom="5.0" />
                </VBox.margin></RadioButton>
-                <RadioButton text="Háromszög" toggleGroup="$togglegroup_Alakzat">
+                <RadioButton onAction="#onHaromszogSelected" text="Háromszög" toggleGroup="$togglegroup_Alakzat">
                <VBox.margin>
                   <Insets bottom="5.0" />
                </VBox.margin></RadioButton>
             </VBox>
         </HBox>
-      <Pane id="pane_Alakzat" fx:id="pane_Alakzat" maxHeight="150.0" maxWidth="200.0" prefHeight="148.0" prefWidth="204.0">
+      <Pane id="pane_Alakzat" fx:id="pane_Alakzat" maxHeight="178.0" maxWidth="200.0" prefHeight="169.0" prefWidth="200.0">
          <children>
-            <ImageView id="imageview_Alakzat" fx:id="imageview_Alakzat" fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" />
+            <ImageView id="imageview_Alakzat" fx:id="imageview_Alakzat" fitHeight="132.0" fitWidth="153.0" layoutX="34.0" layoutY="19.0" pickOnBounds="true" preserveRatio="true" />
          </children>
+         <padding>
+            <Insets top="10.0" />
+         </padding>
       </Pane>
     </VBox>
     <VBox alignment="TOP_CENTER" maxHeight="250.0" prefWidth="200">
