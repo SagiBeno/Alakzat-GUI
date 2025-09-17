@@ -1,5 +1,6 @@
 package com.example.alakzatgui;
 
+import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -70,14 +71,30 @@ public class AlakzatController {
             newLine += "Kek, ";
         }
 
-        // TODO
         if (radioKor.isSelected()) newLine += "Kör";
         if (radioHaromszog.isSelected()) newLine += "Háromszög";
         if (radioNegyzet.isSelected()) newLine += "Négyzet";
 
+        // TODO
         //listviewLines.add("Piros, Kör");
         if (!newLine.isEmpty()) listviewLines.add(newLine);
+
         listview_Listview.setItems(listviewLines);
+        listview_Listview.getSelectionModel().selectLast();
+    }
+
+    public void onTorolClick(ActionEvent actionEvent) {
+        ObservableList<String> listviewLines = listview_Listview.getItems();
+        ObservableList<Integer> selectedIndices = listview_Listview.getSelectionModel().getSelectedIndices();
+
+        ObservableList<String> newListviewLines = FXCollections.observableArrayList();
+        for (int i = 0; i < listviewLines.size(); i++) {
+            if (!selectedIndices.contains(i)) {
+                newListviewLines.add(listviewLines.get(i));
+            }
+        }
+
+        listview_Listview.setItems(newListviewLines);
         listview_Listview.getSelectionModel().selectLast();
     }
 }
