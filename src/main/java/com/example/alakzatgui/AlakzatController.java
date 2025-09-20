@@ -4,6 +4,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
 import javafx.scene.control.ListView;
 import javafx.scene.control.RadioButton;
 import javafx.scene.image.Image;
@@ -14,10 +15,16 @@ import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 
+import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.net.URL;
+import java.util.ResourceBundle;
+import java.util.Scanner;
 
 
-public class AlakzatController {
+public class AlakzatController implements Initializable {
 
     @FXML public ListView<String> listview_Listview;
     @FXML public ImageView imageview_Alakzat;
@@ -135,4 +142,29 @@ public class AlakzatController {
         }
     }
 
+    public void onSaveButton(ActionEvent actionEvent) throws IOException {
+        File fki = new File("alakzat.dat");
+        FileWriter fwki = new FileWriter(fki);
+        for (int i = 0; i < listview_Listview.getItems().size(); i++) {
+            fwki.write(listview_Listview.getItems().get(i) + "\n");
+        }
+        fwki.close();
+    }
+
+    @Override
+    public void initialize(URL url, ResourceBundle resourceBundle) {
+        File file = new File("alakzat.dat");
+        try {
+            Scanner beolvasas = new Scanner(file);
+            ObservableList<String> lista = listview_Listview.getItems();
+            while (beolvasas.hasNextLine()) {
+                String line = beolvasas.nextLine();
+                lista.add(line);
+            }
+            listview_Listview.setItems(lista);
+        } catch (FileNotFoundException e) {
+            throw new RuntimeException(e);
+        }
+
+    }
 }

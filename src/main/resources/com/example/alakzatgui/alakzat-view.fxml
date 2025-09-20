@@ -94,7 +94,7 @@
             </children>
          </HBox>
          <ListView id="listview_Listview" fx:id="listview_Listview" maxWidth="350.0" onMouseClicked="#modositListabol" prefHeight="280.0" prefWidth="274.0" />
-         <Button alignment="TOP_LEFT" mnemonicParsing="false" text="Mentés">
+         <Button alignment="TOP_LEFT" mnemonicParsing="false" onAction="#onSaveButton" text="Mentés">
             <VBox.margin>
                <Insets top="10.0" />
             </VBox.margin>
