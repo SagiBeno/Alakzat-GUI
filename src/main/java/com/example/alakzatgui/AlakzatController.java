@@ -8,6 +8,7 @@ import javafx.scene.control.ListView;
 import javafx.scene.control.RadioButton;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.Pane;
@@ -68,7 +69,7 @@ public class AlakzatController {
         }
 
         if (radioKek.isSelected()) {
-            newLine += "Kek, ";
+            newLine += "Kék, ";
         }
 
         if (radioKor.isSelected()) newLine += "Kör";
@@ -77,7 +78,9 @@ public class AlakzatController {
 
         // TODO
         //listviewLines.add("Piros, Kör");
-        if (!newLine.isEmpty()) listviewLines.add(newLine);
+        if (!newLine.isEmpty() && !listviewLines.contains(newLine) && newLine.length() >= 8) {
+            listviewLines.add(newLine);
+        }
 
         listview_Listview.setItems(listviewLines);
         listview_Listview.getSelectionModel().selectLast();
@@ -97,4 +100,39 @@ public class AlakzatController {
         listview_Listview.setItems(newListviewLines);
         listview_Listview.getSelectionModel().selectLast();
     }
+
+    public void modositListabol(MouseEvent mouseEvent) throws FileNotFoundException {
+        int index = listview_Listview.getSelectionModel().getSelectedIndex();
+        String valasztas = listview_Listview.getItems().get(index);
+        String szin = valasztas.split(", ")[0].strip();
+        String alakzat = valasztas.split(", ")[1].strip();
+        ActionEvent actionEvent = new ActionEvent();
+
+        if (szin.equals("Piros")) {
+            radioPiros.setSelected(true);
+            onPirosSelected(actionEvent);
+        }
+        if (szin.equals("Zöld")) {
+            radioZold.setSelected(true);
+            onZoldSelected(actionEvent);
+        }
+        if (szin.equals("Kék")){
+            radioKek.setSelected(true);
+            onKekSelected(actionEvent);
+        }
+
+        if (alakzat.equals("Négyzet")){
+            radioNegyzet.setSelected(true);
+            onNegyzetSelected(actionEvent);
+        }
+        if (alakzat.equals("Kör")){
+            radioKor.setSelected(true);
+            onKorSelected(actionEvent);
+        }
+        if (alakzat.equals("Háromszög")){
+            radioHaromszog.setSelected(true);
+            onHaromszogSelected(actionEvent);
+        }
+    }
+
 }
