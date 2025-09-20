@@ -20,11 +20,17 @@ import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.ResourceBundle;
 import java.util.Scanner;
 
 
 public class AlakzatController implements Initializable {
+
+    public static boolean isRunningTest = false;
+    public static String TesztSzin, TesztAlakzat;
+    public static ArrayList<String> tesztLista = new ArrayList<>();
+    public static int tesztIndex;
 
     @FXML public ListView<String> listview_Listview;
     @FXML public ImageView imageview_Alakzat;
@@ -38,7 +44,6 @@ public class AlakzatController implements Initializable {
 
     public void onPirosSelected(ActionEvent actionEvent) {
         // System.out.println("onPirosSelected actionEvent" + actionEvent);
-
         pane_Alakzat.setBackground(new Background(new BackgroundFill(Color.RED, null, null)));
     }
 
@@ -63,53 +68,51 @@ public class AlakzatController implements Initializable {
     }
 
     public void onHozaadClick(ActionEvent actionEvent) {
-        ObservableList<String> listviewLines = listview_Listview.getItems();
 
-        String szin = "";
-        String alakzat = "";
+        if(!isRunningTest){
+            ObservableList<String> listviewLines = listview_Listview.getItems();
+            String eredmeny = "";
+            String szin = "";
+            String alakzat = "";
 
-        if (radioPiros.isSelected()) {
-            szin += "Piros, ";
-        }
+            szin = radioPiros.isSelected() ? "Piros" : radioKek.isSelected() ? "Kék" : radioZold.isSelected() ? "Zöld" : "";
+            alakzat = radioKor.isSelected() ? "Kör" : radioNegyzet.isSelected() ? "Négyzet" : radioHaromszog.isSelected() ? "Háromszög" : "";
 
-        if (radioZold.isSelected()) {
-            szin += "Zöld, ";
-        }
-
-        if (radioKek.isSelected()) {
-            szin += "Kék, ";
-        }
-
-        if (radioKor.isSelected()) alakzat += "Kör";
-        if (radioHaromszog.isSelected()) alakzat += "Háromszög";
-        if (radioNegyzet.isSelected()) alakzat += "Négyzet";
-
-        String eredmeny = "";
-        if (!szin.isEmpty() && !alakzat.isEmpty()) {
-            eredmeny = szin + ", " + alakzat;
-        }
-        //listviewLines.add("Piros, Kör");
-        if (!eredmeny.isEmpty()) {
-            listviewLines.add(eredmeny);
-        }
-
-        listview_Listview.setItems(listviewLines);
-        listview_Listview.getSelectionModel().selectLast();
-    }
-
-    public void onTorolClick(ActionEvent actionEvent) {
-        ObservableList<String> listviewLines = listview_Listview.getItems();
-        ObservableList<Integer> selectedIndices = listview_Listview.getSelectionModel().getSelectedIndices();
-
-        ObservableList<String> newListviewLines = FXCollections.observableArrayList();
-        for (int i = 0; i < listviewLines.size(); i++) {
-            if (!selectedIndices.contains(i)) {
-                newListviewLines.add(listviewLines.get(i));
+            if (!szin.isEmpty() && !alakzat.isEmpty()) {
+                eredmeny = szin + ", " + alakzat;
+                listviewLines.add(eredmeny);
+                listview_Listview.setItems(listviewLines);
+                listview_Listview.getSelectionModel().selectLast();
             }
         }
 
-        listview_Listview.setItems(newListviewLines);
-        listview_Listview.getSelectionModel().selectLast();
+        else{
+            String eredmeny = TesztSzin + ", " + TesztAlakzat;
+            tesztLista.add(eredmeny);
+        }
+    }
+
+    public void onTorolClick(ActionEvent actionEvent) {
+
+        if (!isRunningTest) {
+            ObservableList<String> listviewLines = listview_Listview.getItems();
+            ObservableList<Integer> selectedIndices = listview_Listview.getSelectionModel().getSelectedIndices();
+
+            ObservableList<String> newListviewLines = FXCollections.observableArrayList();
+            for (int i = 0; i < listviewLines.size(); i++) {
+                if (!selectedIndices.contains(i)) {
+                    newListviewLines.add(listviewLines.get(i));
+                }
+            }
+
+            listview_Listview.setItems(newListviewLines);
+            listview_Listview.getSelectionModel().selectLast();
+        }
+
+        else {
+            tesztLista.remove(tesztIndex);
+        }
+
     }
 
     public void modositListabol(MouseEvent mouseEvent) throws FileNotFoundException {
@@ -147,27 +150,55 @@ public class AlakzatController implements Initializable {
     }
 
     public void onSaveButton(ActionEvent actionEvent) throws IOException {
-        File fki = new File("alakzat.dat");
-        FileWriter fwki = new FileWriter(fki);
-        for (int i = 0; i < listview_Listview.getItems().size(); i++) {
-            fwki.write(listview_Listview.getItems().get(i) + "\n");
+
+        if (!isRunningTest) {
+            File fki = new File("alakzat.dat");
+            FileWriter fwki = new FileWriter(fki);
+            for (int i = 0; i < listview_Listview.getItems().size(); i++) {
+                fwki.write(listview_Listview.getItems().get(i) + "\n");
+            }
+            fwki.close();
         }
-        fwki.close();
+
+        else {
+            File fki = new File("alakzat.dat");
+            FileWriter fwki = new FileWriter(fki);
+            for (int i = 0; i < tesztLista.size(); i++) {
+                fwki.write(tesztLista.get(i) + "\n");
+            }
+            fwki.close();
+        }
     }
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         File file = new File("alakzat.dat");
-        try {
-            Scanner beolvasas = new Scanner(file);
-            ObservableList<String> lista = listview_Listview.getItems();
-            while (beolvasas.hasNextLine()) {
-                String line = beolvasas.nextLine();
-                lista.add(line);
+
+        if (!isRunningTest) {
+            try {
+                Scanner beolvasas = new Scanner(file);
+                ObservableList<String> lista = listview_Listview.getItems();
+                while (beolvasas.hasNextLine()) {
+                    String line = beolvasas.nextLine();
+                    lista.add(line);
+                }
+                listview_Listview.setItems(lista);
+            } catch (FileNotFoundException e) {
+                throw new RuntimeException(e);
             }
-            listview_Listview.setItems(lista);
-        } catch (FileNotFoundException e) {
-            throw new RuntimeException(e);
         }
+
+        else {
+            try {
+                Scanner beolvasas = new Scanner(file);
+                while (beolvasas.hasNextLine()) {
+                    String line = beolvasas.nextLine();
+                    tesztLista.add(line);
+                }
+            } catch (FileNotFoundException e) {
+                throw new RuntimeException(e);
+            }
+        }
+
     }
 }
