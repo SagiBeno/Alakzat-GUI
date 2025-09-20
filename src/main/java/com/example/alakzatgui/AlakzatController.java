@@ -65,28 +65,32 @@ public class AlakzatController implements Initializable {
     public void onHozaadClick(ActionEvent actionEvent) {
         ObservableList<String> listviewLines = listview_Listview.getItems();
 
-        String newLine = "";
+        String szin = "";
+        String alakzat = "";
 
         if (radioPiros.isSelected()) {
-            newLine += "Piros, ";
+            szin += "Piros, ";
         }
 
         if (radioZold.isSelected()) {
-            newLine += "Zöld, ";
+            szin += "Zöld, ";
         }
 
         if (radioKek.isSelected()) {
-            newLine += "Kék, ";
+            szin += "Kék, ";
         }
 
-        if (radioKor.isSelected()) newLine += "Kör";
-        if (radioHaromszog.isSelected()) newLine += "Háromszög";
-        if (radioNegyzet.isSelected()) newLine += "Négyzet";
+        if (radioKor.isSelected()) alakzat += "Kör";
+        if (radioHaromszog.isSelected()) alakzat += "Háromszög";
+        if (radioNegyzet.isSelected()) alakzat += "Négyzet";
 
-        // TODO
+        String eredmeny = "";
+        if (!szin.isEmpty() && !alakzat.isEmpty()) {
+            eredmeny = szin + ", " + alakzat;
+        }
         //listviewLines.add("Piros, Kör");
-        if (!newLine.isEmpty() && !listviewLines.contains(newLine) && newLine.length() >= 8) {
-            listviewLines.add(newLine);
+        if (!eredmeny.isEmpty()) {
+            listviewLines.add(eredmeny);
         }
 
         listview_Listview.setItems(listviewLines);
@@ -165,6 +169,5 @@ public class AlakzatController implements Initializable {
         } catch (FileNotFoundException e) {
             throw new RuntimeException(e);
         }
-
     }
 }
